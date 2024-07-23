@@ -24,7 +24,6 @@ import { ChangeEvent, useState } from "react";
 import { useToPng } from "@hugocxl/react-to-image";
 import Image from "next/image";
 import PostFooter from "@/components/postFooter";
-import TopBar from "@/components/TopBar";
 import Link from "next/link";
 
 const formSchema = z.object({
@@ -33,7 +32,7 @@ const formSchema = z.object({
 });
 
 const Page = () => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>("/astoroimg.jpg");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,7 +53,7 @@ const Page = () => {
     }
   };
 
-  const [_, convert, ref] = useToPng<HTMLDivElement>({
+  const [{ isSuccess }, convert, ref] = useToPng<HTMLDivElement>({
     quality: 1.0,
     onSuccess: (data) => {
       const link = document.createElement("a");
@@ -134,7 +133,7 @@ const Page = () => {
             </div>
             <PostFooter />
             <Image
-              src={imageUrl || "/astoroimg.jpg"}
+              src={imageUrl}
               alt="image"
               width={800}
               height={800}
