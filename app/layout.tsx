@@ -1,8 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
+import localFont from "next/font/local";
+import Footer from "@/components/Footer";
+import TopBar from "@/components/TopBar";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
+});
+
+const basuru = localFont({
+  src: "./../fonts/FMBasuru x.ttf",
+  variable: "--font-basuru",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +28,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${poppins.variable} ${basuru.variable}`}>
+        <TopBar />
+        <div className="  flex w-full min-h-[85vh] items-center justify-center text-2xl text-center sm:hidden">
+          Can not use with mobile phones
+        </div>
+        <div className="max-sm:hidden">{children}</div>
+        <Footer />
+      </body>
     </html>
   );
 }
